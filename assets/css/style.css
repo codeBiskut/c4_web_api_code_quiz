@@ -1,0 +1,16 @@
+
+body {
+    font-family: Arial;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+}
+.question-box {
+    width: 50vw;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
