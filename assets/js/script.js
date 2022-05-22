@@ -4,13 +4,13 @@ var question = document.querySelector(".question-box");
 
 
 // array of questions to be displayed
-var questionList = ["Inside which HTML element do we put the Javascript?", "How do you write 'Hello World' in an alert box?", "How do you declare a function named 'myFunction' in Javascript?", "How do you call a function named 'myFunction'?", "How to write an IF statement for executing some code if 'i' is NOT equal to 5?"]
+var questionList = ["Inside which HTML element do we put the Javascript?", "How do you write 'Hello World' in an alert box?", "How do you declare a function named 'myFunction' in Javascript?", "How do you call a function named 'myFunction'?", "How to write an IF statement for executing some code if 'i' is NOT equal to 5?"];
 
 
 // array of array of answers; correct answers are first in the secondary array
-var AnswerList = [["<script>", "<button>", "<span>", "<h1>"], ["alert('Hello World')", "write alert('Hello World')", "print('Hello World')", "System.out.println('Hello World')"], ["function myFunction()", "myFunction()", "var myFunction()", "new function = myFunction()"], ["myFunction()", "function myFunction()", "myFunction", "call myFunction()"], ["if (i != 5)","if (i = 5)", "if ('i' not equal to 5)", "if (i >= 5)"]]
+var AnswerList = [["<script>", "<button>", "<span>", "<h1>"], ["alert('Hello World')", "write alert('Hello World')", "print('Hello World')", "System.out.println('Hello World')"], ["function myFunction()", "myFunction()", "var myFunction()", "new function = myFunction()"], ["myFunction()", "function myFunction()", "myFunction", "call myFunction()"], ["if (i != 5)","if (i = 5)", "if ('i' not equal to 5)", "if (i >= 5)"]];
 
-var rightAnswers = ["<script>", "alert('Hello World')", "function myFunction()", "myFunciton()", "if (i != 5)"]
+var rightAnswers = ["<script>", "alert('Hello World')", "function myFunction()", "myFunciton()", "if (i != 5)"];
 
 var questionsRight = 0;
 var questionsWrong = 0;
@@ -30,10 +30,11 @@ function startGame() {
 
     // start timer
     startTimer();
+    renderQuestion();
 }
 
 function renderQuestion(){
-    question.innerHTML = questionList
+    question.innerHTML = questionList[Math.floor(Math.random() * questionList.length)];
 }
 
 function score() {
