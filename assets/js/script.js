@@ -3,6 +3,7 @@ var startButton = document.querySelector(".start-button")
 var question = document.querySelector(".question-box")
 var answer = document.querySelector(".multiple-choice")
 var answerUl = document.querySelector(".answer-ul")
+var answerEl = document.querySelector(".answer-container")
 
 var answerAlt = document.getElementById("answer-ul")
 
@@ -48,10 +49,10 @@ function startGame() {
     startButton.disabled = true;
 
     // throw question up
-    renderQuestion();
+    //renderQuestion();
 
     // throw answers up
-    renderAnswers();
+    //renderAnswers();
 
     // start timer
     startTimer();
@@ -61,13 +62,16 @@ function renderAnswers() {
     // for every answer to the question (4)
 
     for (var i = 0; i < answerList[index].length; i++) {
-        // create a li tag w/ answer and append to answer-ul
-        var tag = document.createElement("li");
+        // create a li tag w/ answer and append to answer-ul (also adds id to tag)
+        var tag = document.createElement("button");
         tag.textContent = answerList[index][i];
-        var idName = "answer" + i;
-        answerAlt.appendChild(tag);
-        tag.setAttribute("id", idName);
+        tag.classList.add("alert-button");
+        answerEl.appendChild(tag);
+        // var idName = "answer" + i;
+        // tag.setAttribute("id", idName);
     }
+    
+    
 }
 
 function renderQuestion() {
@@ -100,6 +104,16 @@ function startTimer() {
             score();
         }
     }, 1000)
+    renderQuestion();
+    renderAnswers();
+
+    answerEl.addEventListener("click", function(e){
+        if (e.target.classList.contains("alert-button")){
+            var userAnswer = e.target.innerHTML;
+            alert(userAnswer)
+        }
+    })
+
 };
 
 // listens for click on start button, runs startGame on click
