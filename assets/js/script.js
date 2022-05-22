@@ -4,6 +4,7 @@ var question = document.querySelector(".question-box")
 var answer = document.querySelector(".multiple-choice")
 var answerUl = document.querySelector(".answer-ul")
 
+var answerAlt = document.getElementById("answer-ul")
 
 // array of questions to be displayed
 var questionList = ["Inside which HTML element do we put the Javascript?", "How do you write 'Hello World' in an alert box?", "How do you declare a function named 'myFunction' in Javascript?", "How do you call a function named 'myFunction'?", "How to write an IF statement for executing some code if 'i' is NOT equal to 5?"];
@@ -46,9 +47,6 @@ function startGame() {
     // disables start button once game starts?
     startButton.disabled = true;
 
-    question.textContent = "";
-    answer.textContent = "";
-
     // throw question up
     renderQuestion();
 
@@ -60,19 +58,16 @@ function startGame() {
 }
 
 function renderAnswers() {
-    //answerUl
     // for every answer to the question (4)
-    //alert(answerList[index].length)
-    var tag = document.createElement("li");
-    tag.textContent = answerList[index][index2];
-    console.log(tag)
-    answerUl.appendChild(tag);
-    // for(var i=0; i>answerList[index].length; i++){
-    //     // create a li tag w/ answer and append to answer-ul
 
-    // }
-    // answer.textContent = answerList[index][index2];
-    // console.log(answerList[index][index2])
+    for (var i = 0; i < answerList[index].length; i++) {
+        // create a li tag w/ answer and append to answer-ul
+        var tag = document.createElement("li");
+        tag.textContent = answerList[index][i];
+        var idName = "answer" + i;
+        answerAlt.appendChild(tag);
+        tag.setAttribute("id", idName);
+    }
 }
 
 function renderQuestion() {
