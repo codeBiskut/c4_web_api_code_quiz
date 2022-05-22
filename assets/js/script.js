@@ -10,13 +10,19 @@ var questionList = ["Inside which HTML element do we put the Javascript?", "How 
 // array of array of answers; correct answers are first in the secondary array
 var AnswerList = [["<script>", "<button>", "<span>", "<h1>"], ["alert('Hello World')", "write alert('Hello World')", "print('Hello World')", "System.out.println('Hello World')"], ["function myFunction()", "myFunction()", "var myFunction()", "new function = myFunction()"], ["myFunction()", "function myFunction()", "myFunction", "call myFunction()"], ["if (i != 5)","if (i = 5)", "if ('i' not equal to 5)", "if (i >= 5)"]];
 
+// array of correct answers? idk if this will get used
 var rightAnswers = ["<script>", "alert('Hello World')", "function myFunction()", "myFunciton()", "if (i != 5)"];
 
+// used in calculation of score
 var questionsRight = 0;
 var questionsWrong = 0;
 var questionsAnswered = 0;
+
+// timer variables
 var timeLeft = 30;
 var timer;
+
+// index for q/a arrays
 var index;
 
 
@@ -27,14 +33,17 @@ function init() {
 // starts the game
 function startGame() {
     // disables start button once game starts?
+    startButton.disabled = true;
 
     // start timer
-    startTimer();
     renderQuestion();
+    startTimer();
 }
 
 function renderQuestion(){
-    question.innerHTML = questionList[Math.floor(Math.random() * questionList.length)];
+    index = Math.floor(Math.random() * questionList.length);
+    console.log(index.value)
+    question.innerHTML = questionList[index];
 }
 
 function score() {
