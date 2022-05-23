@@ -65,7 +65,7 @@ function renderAnswers() {
         // create a li tag w/ answer and append to answer-ul (also adds id to tag)
         var tag = document.createElement("button");
         tag.textContent = answerList[index][i];
-        tag.classList.add("alert-button");
+        tag.classList.add("answer-button");
         answerEl.appendChild(tag);
         // var idName = "answer" + i;
         // tag.setAttribute("id", idName);
@@ -107,10 +107,31 @@ function startTimer() {
     renderQuestion();
     renderAnswers();
 
+    
+    // add event listenert to answer container
     answerEl.addEventListener("click", function(e){
-        if (e.target.classList.contains("alert-button")){
+        // if the target clicked was an answer button
+        if (e.target.classList.contains("answer-button")){
+            // take the html of the button
             var userAnswer = e.target.innerHTML;
-            alert(userAnswer)
+
+            var userAnswerParsedlt = userAnswer.replace("&lt;", '<');
+            var userAnswerParsedgt = userAnswerParsedlt.replace("&gt;", ">")
+
+            alert(userAnswerParsedgt)
+            // compare it to the correct answer
+            if ((userAnswerParsedgt.includes(rightAnswers[index])) && userAnswerParsedgt.length === rightAnswers[index].length){
+                // if right, increment questionsRight and display an alert
+                questionsRight++;
+                alert("correct!")
+            }
+            else{
+                // if wrong, increment questionsWrong and subtract 2s from timer
+                // and display wrong
+                questionsWrong++;
+                timeLeft = timeLeft - 2
+                alert("wrong")
+            }
         }
     })
 
