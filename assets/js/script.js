@@ -104,7 +104,10 @@ function startTimer() {
             score();
         }
     }, 1000)
+
+    // render first question and answers
     renderQuestion();
+    answerEl.innerHTML = "";
     renderAnswers();
 
     
@@ -115,15 +118,27 @@ function startTimer() {
             // take the html of the button
             var userAnswer = e.target.innerHTML;
 
+            // < and > replace their codes
             var userAnswerParsedlt = userAnswer.replace("&lt;", '<');
             var userAnswerParsedgt = userAnswerParsedlt.replace("&gt;", ">")
 
-            alert(userAnswerParsedgt)
             // compare it to the correct answer
             if ((userAnswerParsedgt.includes(rightAnswers[index])) && userAnswerParsedgt.length === rightAnswers[index].length){
                 // if right, increment questionsRight and display an alert
                 questionsRight++;
                 alert("correct!")
+
+                // splice current selection from q/a arrays
+                rightAnswers.splice(index);
+                questionList.splice(index);
+                answerList.splice(index);
+
+                // update index
+                index = Math.floor(Math.random() * questionList.length);
+                
+                // cycle to next question/answer
+                renderQuestion();
+                renderAnswers();
             }
             else{
                 // if wrong, increment questionsWrong and subtract 2s from timer
@@ -131,6 +146,18 @@ function startTimer() {
                 questionsWrong++;
                 timeLeft = timeLeft - 2
                 alert("wrong")
+
+                // splice current selection from q/a arrays
+                rightAnswers.splice(index);
+                questionList.splice(index);
+                answerList.splice(index);
+
+                // update index
+                index = Math.floor(Math.random() * questionList.length);
+
+                // cycle to next question/answer
+                renderQuestion();
+                renderAnswers();
             }
         }
     })
