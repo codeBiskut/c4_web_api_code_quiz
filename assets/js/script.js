@@ -17,11 +17,6 @@ var answerList = [["<script>", "<button>", "<span>", "<h1>"], ["alert('Hello Wor
 
 // array of correct answers? idk if this will get used
 var rightAnswers = ["<script>", "alert('Hello World')", "function myFunction()", "myFunciton()", "if (i != 5)"];
-var answer1;
-var answer2;
-var answer3;
-var answer4;
-
 
 // used in calculation of score
 var questionsRight = 0;
@@ -34,9 +29,6 @@ var timer;
 
 // index for q/a arrays
 var index = Math.floor(Math.random() * questionList.length);
-var index2 = Math.floor(Math.random() * answerList[index].length);
-console.log(index2)
-
 
 // page startup
 function init() {
@@ -48,32 +40,30 @@ function startGame() {
     // disables start button once game starts?
     startButton.disabled = true;
 
-    // throw question up
-    //renderQuestion();
-
-    // throw answers up
-    //renderAnswers();
-
     // start timer
     startTimer();
 }
 
+// renders answers to the page
 function renderAnswers() {
-    // for every answer to the question (4)
+    // cleans the answer slate
+    while (answerEl.hasChildNodes()){
+        answerEl.removeChild(answerEl.firstChild);
+    }
 
+    // for every answer to the question (4)
     for (var i = 0; i < answerList[index].length; i++) {
         // create a li tag w/ answer and append to answer-ul (also adds id to tag)
         var tag = document.createElement("button");
         tag.textContent = answerList[index][i];
         tag.classList.add("answer-button");
         answerEl.appendChild(tag);
-        // var idName = "answer" + i;
-        // tag.setAttribute("id", idName);
     }
     
     
 }
 
+// renders questions to the page
 function renderQuestion() {
     console.log(index)
     question.innerHTML = questionList[index];
@@ -83,10 +73,7 @@ function score() {
 
 }
 
-function checkAnswer() {
-
-}
-
+// starts the timer and contains quiz logic
 function startTimer() {
     //sets timer
     timer = setInterval(function () {
@@ -105,8 +92,10 @@ function startTimer() {
         }
     }, 1000)
 
-    // render first question and answers
+    // render first question
     renderQuestion();
+
+    // clear opening message in answer container, then load answers
     answerEl.innerHTML = "";
     renderAnswers();
 
@@ -129,9 +118,9 @@ function startTimer() {
                 alert("correct!")
 
                 // splice current selection from q/a arrays
-                rightAnswers.splice(index);
-                questionList.splice(index);
-                answerList.splice(index);
+                rightAnswers.splice(index, 1);
+                questionList.splice(index, 1);
+                answerList.splice(index, 1);
 
                 // update index
                 index = Math.floor(Math.random() * questionList.length);
@@ -148,9 +137,9 @@ function startTimer() {
                 alert("wrong")
 
                 // splice current selection from q/a arrays
-                rightAnswers.splice(index);
-                questionList.splice(index);
-                answerList.splice(index);
+                rightAnswers.splice(index, 1);
+                questionList.splice(index, 1);
+                answerList.splice(index, 1);
 
                 // update index
                 index = Math.floor(Math.random() * questionList.length);
