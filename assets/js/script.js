@@ -22,6 +22,8 @@ var questionsRight = 0;
 var questionsWrong = 0;
 var questionsAnswered = 0;
 
+var userInputEl;
+
 // variable for win
 var isWin;
 
@@ -53,6 +55,13 @@ function renderAnswers() {
         answerEl.removeChild(answerEl.firstChild);
     }
 
+    // if it is a dub, render the scoreboard
+    isWin = checkWin();
+    if (checkWin() === true || index >= questionList.length) {
+        renderScore();
+        return;
+    }
+
     // for every answer to the question (4)
     for (var i = 0; i < answerList[index].length; i++) {
         // create a li tag w/ answer and append to answer-ul (also adds id to tag)
@@ -75,13 +84,48 @@ function calculateScore() {
 
 }
 
-function renderHighscore{
+function renderHighscore() {
     // clears quiz ui
     while (quizUI.hasChildNodes()) {
         quizUI.removeChild(quizUI.firstChild);
     }
 
-    
+    // create elements needed to display highscores
+    var highscoreContainer = document.createElement("div");
+    var highscoreText = document.createElement("div");
+    var highscoreTable = document.createElement("table");
+    var headerRow = document.createElement("tr");
+    var userRow = document.createElement("tr");
+    var thIni = document.createElement("th");
+    var thScore = document.createElement("th");
+    var thTimeRem = document.createElement("th");
+    var tdIni = document.createElement("td");
+    var tdScore = document.createElement("td");
+    var tdTimeRem = document.createElement("td");
+
+    // set attributes of created elements
+    highscoreContainer.classList.add("highscore-container");
+    highscoreText.innerHTML = "Highscores:";
+    highscoreTable.classList.add("highscore-table");
+    thIni.innerHTML = "Initials";
+    thScore.innerHTML = "Score";
+    thTimeRem.innerHTML = "Time Remaining";
+    tdIni.innerHTML = userInputEl.value;
+    tdScore.innerHTML = score;
+    tdTimeRem.innerHTML = timeLeft;
+
+    // append elements
+    quizUI.appendChild(highscoreContainer);
+    highscoreContainer.appendChild(highscoreText);
+    highscoreContainer.appendChild(highscoreTable);
+    highscoreTable.appendChild(headerRow);
+    headerRow.appendChild(thIni);
+    headerRow.appendChild(thScore);
+    headerRow.appendChild(thTimeRem);
+    highscoreTable.appendChild(userRow);
+    userRow.appendChild(tdIni);
+    userRow.appendChild(tdScore);
+    userRow.appendChild(tdTimeRem);
 }
 
 // calculates score and renders scorecard
@@ -121,24 +165,29 @@ function renderScore() {
 
     // append elements
     quizUI.appendChild(scorecardContainer);
-    var scoreContainer = document.querySelector(".scorecard-container")
-    scoreContainer.appendChild(scoretext);
-    scoreContainer.appendChild(scorecard);
-    scoreContainer.appendChild(timeRemText);
-    scoreContainer.appendChild(timeRem);
-    scoreContainer.appendChild(addIniForm);
-    scoreContainer.appendChild(addIniLabel);
-    scoreContainer.appendChild(addIniInput);
-    scoreContainer.appendChild(submit);
+    //var scoreContainer = document.querySelector(".scorecard-container")
+    //scorecardContainer.appendChild(scoreContainer);
+    scorecardContainer.appendChild(scoretext);
+    scorecardContainer.appendChild(scorecard);
+    scorecardContainer.appendChild(timeRemText);
+    scorecardContainer.appendChild(timeRem);
+    scorecardContainer.appendChild(addIniForm);
+    scorecardContainer.appendChild(addIniLabel);
+    scorecardContainer.appendChild(addIniInput);
+    scorecardContainer.appendChild(submit);
 
-    var userIni = document.getElementById("initials").value;
-    localStorage.setItem("winner-ini", userIni);
+    var userIni = document.getElementById("initials");
+    userInputEl = userIni;
+    localStorage.setItem("winner-ini", userIni.value);
+
+    renderHighscore();
 }
 
 // check if the win conditions are met
 function checkWin() {
     // if wincons are met
-    if (timeLeft === 0 || questionList.length === 0) {
+    console.log(index)
+    if (timeLeft === 0 || questionList.length === 0 || index === 0) {
         // stop timer and clear interval
         clearInterval(timer);
         // return true
@@ -160,7 +209,7 @@ function startTimer() {
 
         // if it is a dub, render the scoreboard
         isWin = checkWin();
-        console.log(isWin)
+        //console.log(isWin)
         if (checkWin() === true) {
             clearInterval(timer);
             renderScore();
@@ -185,6 +234,16 @@ function startTimer() {
             // < and > replace their codes
             var userAnswerParsedlt = userAnswer.replace("&lt;", '<');
             var userAnswerParsedgt = userAnswerParsedlt.replace("&gt;", ">")
+
+            // if it is a dub, render the scoreboard
+            isWin = checkWin();
+            if (checkWin() === true || index >= questionList.length) {
+                renderScore();
+                alert("end")
+                return;
+            }
+
+
 
             // compare it to the correct answer
             if ((userAnswerParsedgt.includes(rightAnswers[index])) && userAnswerParsedgt.length === rightAnswers[index].length) {
@@ -225,11 +284,7 @@ function startTimer() {
             }
         }
 
-        // if it is a dub, render the scoreboard
-        isWin = checkWin();
-        if (checkWin() === true) {
-            renderScore();
-        }
+
     })
 
 };
