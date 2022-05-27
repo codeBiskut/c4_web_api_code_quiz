@@ -8,7 +8,7 @@ header {
     justify-content: space-between;
 }
 
-.question-box, .answer-container, .scorecard-container {
+#question-box, #answer-container, #scorecard-container {
     background-color: antiquewhite;
     border: 1px solid #eceff1;
     border-radius: 8px;
@@ -23,7 +23,7 @@ header {
 
 }
 
-.grade-display{
+#score-display{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -32,4 +32,8 @@ header {
     padding-top: 10px;
     text-align: center;
     border-top: 1px solid #eceff1;
+}
+
+.hide {
+    display:none;
 }
