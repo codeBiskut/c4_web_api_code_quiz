@@ -4,6 +4,8 @@ var questionBoxEl = document.getElementById("question-box")
 var answerBoxEl = document.getElementById("answer-container")
 var scoreDisplayEl = document.getElementById("score-display")
 var quizInterfaceEl = document.getElementById("quiz-interface")
+var landingMessageEl = document.getElementById("landing-message")
+var highscoreEl = document.getElementById("highscores")
 
 // array of questions to be displayed
 var questionList = ["Inside which HTML element do we put the Javascript?", "How do you write 'Hello World' in an alert box?", "How do you declare a function named 'myFunction' in Javascript?", "How do you call a function named 'myFunction'?", "How to write an IF statement for executing some code if 'i' is NOT equal to 5?"];
@@ -44,6 +46,9 @@ function startGame() {
     // disables start button once game starts?
     startButtonEl.disabled = true;
 
+    // hides landing message
+    landingMessageEl.setAttribute("class", "hide");
+
     // start timer
     startTimer();
 }
@@ -74,22 +79,19 @@ function renderAnswers() {
 
 // renders questions to the page
 function renderQuestion() {
-    alert(questionList[index])
     questionBoxEl.innerHTML = questionList[index];
 }
 
 // calculates score
 function calculateScore() {
     // calculate score; 5 points for every correct answer
-    score = questionsRight * 5;
+    score = timeLeft;
 
 }
 
 function renderHighscore() {
     // clears quiz ui
-    while (quizInterfaceEl.hasChildNodes()) {
-        quizInterfaceEl.removeChild(quizInterfaceEl.firstChild);
-    }
+    scoreDisplayEl.setAttribute("class", "hide");
 
     // create elements needed to display highscores
     var highscoreContainer = document.createElement("div");
@@ -132,9 +134,8 @@ function renderHighscore() {
 // calculates score and renders scorecard
 function renderScore() {
     // removes questionBoxEl box, answer container, and grade display from quiz ui
-    while (quizInterfaceEl.hasChildNodes()) {
-        quizInterfaceEl.removeChild(quizInterfaceEl.firstChild);
-    }
+    answerBoxEl.setAttribute("class", "hide");
+    questionBoxEl.setAttribute("class", "hide");
 
     // calculate the score
     calculateScore();
@@ -218,9 +219,11 @@ function startTimer() {
     }, 1000)
 
     // render first questionBoxEl
+    questionBoxEl.setAttribute("class", "");
     renderQuestion();
 
     // clear opening message in answer container, then load answers
+    answerBoxEl.setAttribute("class", "");
     answerBoxEl.innerHTML = "";
     renderAnswers();
 
