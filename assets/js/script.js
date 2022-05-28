@@ -91,7 +91,8 @@ function calculateScore() {
 
 function renderHighscore() {
     // clears quiz ui
-    scoreDisplayEl.setAttribute("class", "hide");
+    scoreDisplayEl.classList.add("hide");
+    alert("made it")
 
     // create elements needed to display highscores
     var highscoreContainer = document.createElement("div");
@@ -101,10 +102,8 @@ function renderHighscore() {
     var userRow = document.createElement("tr");
     var thIni = document.createElement("th");
     var thScore = document.createElement("th");
-    var thTimeRem = document.createElement("th");
     var tdIni = document.createElement("td");
     var tdScore = document.createElement("td");
-    var tdTimeRem = document.createElement("td");
 
     // set attributes of created elements
     highscoreContainer.classList.add("highscore-container");
@@ -112,10 +111,8 @@ function renderHighscore() {
     highscoreTable.classList.add("highscore-table");
     thIni.innerHTML = "Initials";
     thScore.innerHTML = "Score";
-    thTimeRem.innerHTML = "Time Remaining";
     tdIni.innerHTML = userInputEl.value;
     tdScore.innerHTML = score;
-    tdTimeRem.innerHTML = timeLeft;
 
     // append elements
     quizInterfaceEl.appendChild(highscoreContainer);
@@ -124,18 +121,16 @@ function renderHighscore() {
     highscoreTable.appendChild(headerRow);
     headerRow.appendChild(thIni);
     headerRow.appendChild(thScore);
-    headerRow.appendChild(thTimeRem);
     highscoreTable.appendChild(userRow);
     userRow.appendChild(tdIni);
     userRow.appendChild(tdScore);
-    userRow.appendChild(tdTimeRem);
 }
 
 // calculates score and renders scorecard
 function renderScore() {
     // removes questionBoxEl box, answer container, and grade display from quiz ui
-    answerBoxEl.setAttribute("class", "hide");
-    questionBoxEl.setAttribute("class", "hide");
+    answerBoxEl.classList.add("hide");
+    questionBoxEl.classList.add("hide");
 
     // calculate the score
     calculateScore();
@@ -144,8 +139,6 @@ function renderScore() {
     var scorecardContainer = document.createElement("div");
     var scorecard = document.createElement("div");
     var scoretext = document.createElement("div");
-    var timeRemText = document.createElement("div");
-    var timeRem = document.createElement("div");
     var addIniForm = document.createElement("form");
     var addIniLabel = document.createElement("label");
     var addIniInput = document.createElement("input");
@@ -156,14 +149,13 @@ function renderScore() {
     scorecard.classList.add("scorecard");
     scorecard.innerHTML = score;
     scoretext.innerHTML = "Your score is:";
-    timeRemText.innerHTML = "Time remaining:";
-    timeRem.innerHTML = timeLeft;
     addIniForm.classList.add("input-form");
     addIniForm.setAttribute("id", "initials");
     addIniLabel.innerHTML = "Enter your initials:";
     addIniInput.classList.add("input-box");
     addIniInput.setAttribute("type", "text");
     submit.setAttribute("type", "submit");
+    submit.setAttribute("id", "formSubmitButton");
 
     // append elements
     quizInterfaceEl.appendChild(scorecardContainer);
@@ -171,8 +163,6 @@ function renderScore() {
     //scorecardContainer.appendChild(scoreContainer);
     scorecardContainer.appendChild(scoretext);
     scorecardContainer.appendChild(scorecard);
-    scorecardContainer.appendChild(timeRemText);
-    scorecardContainer.appendChild(timeRem);
     scorecardContainer.appendChild(addIniForm);
     scorecardContainer.appendChild(addIniLabel);
     scorecardContainer.appendChild(addIniInput);
@@ -182,13 +172,17 @@ function renderScore() {
     userInputEl = userIni;
     localStorage.setItem("winner-ini", userIni.value);
 
-    renderHighscore();
+    // event listener for submit button
+    var submitButton = document.getElementById("formSubmitButton");
+    submitButton.addEventListener("submit", function(){
+        alert("made it")
+        renderHighscore();
+    });
 }
 
 // check if the win conditions are met
 function checkWin() {
     // if wincons are met
-    console.log(index)
     if (timeLeft === 0 || questionList.length === 0 || index === 0) {
         // stop timer and clear interval
         clearInterval(timer);
@@ -211,7 +205,6 @@ function startTimer() {
 
         // if it is a dub, render the scoreboard
         isWin = checkWin();
-        //console.log(isWin)
         if (checkWin() === true) {
             clearInterval(timer);
             renderScore();
