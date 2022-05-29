@@ -34,7 +34,7 @@ var timeLeft = 30;
 var timer;
 
 // index for q/a arrays
-var index = Math.floor(Math.random() * questionList.length);
+var index = Math.floor(Math.random() * (questionList.length - 1));
 
 // page startup
 function init() {
@@ -174,7 +174,7 @@ function renderScore() {
 
     // event listener for submit button
     var submitButton = document.getElementById("formSubmitButton");
-    submitButton.addEventListener("submit", function(){
+    submitButton.addEventListener("submit", function () {
         alert("made it")
         renderHighscore();
     });
@@ -183,7 +183,7 @@ function renderScore() {
 // check if the win conditions are met
 function checkWin() {
     // if wincons are met
-    if (timeLeft === 0 || questionList.length === 0 || index === 0) {
+    if (timeLeft === 0 || questionList.length === 0) {
         // stop timer and clear interval
         clearInterval(timer);
         // return true
@@ -232,21 +232,19 @@ function startTimer() {
             var userAnswerParsedlt = userAnswer.replace("&lt;", '<');
             var userAnswerParsedgt = userAnswerParsedlt.replace("&gt;", ">")
 
-            // if it is a dub, render the scoreboard
-            isWin = checkWin();
-            if (checkWin() === true || index >= questionList.length) {
-                renderScore();
-                alert("end")
-                return;
-            }
-
-
-
             // compare it to the correct answer
             if ((userAnswerParsedgt.includes(rightAnswers[index])) && userAnswerParsedgt.length === rightAnswers[index].length) {
                 // if right, increment questionsRight and display correct
                 questionsRight++;
                 scoreDisplayEl.innerHTML = "Correct!";
+
+                // if it is a dub, render the scoreboard
+                isWin = checkWin();
+                if (checkWin() === true || index >= questionList.length) {
+                    renderScore();
+                    alert("end")
+                    return;
+                }
 
                 // splice current selection from q/a arrays
                 rightAnswers.splice(index, 1);
@@ -254,7 +252,7 @@ function startTimer() {
                 answerList.splice(index, 1);
 
                 // update index
-                index = Math.floor(Math.random() * questionList.length);
+                index = Math.floor(Math.random() * (questionList.length - 1));
 
                 // cycle to next questionBoxEl/answer
                 renderQuestion();
@@ -267,13 +265,21 @@ function startTimer() {
                 timeLeft = timeLeft - 2
                 scoreDisplayEl.innerHTML = "Wrong";
 
+                // if it is a dub, render the scoreboard
+            isWin = checkWin();
+            if (checkWin() === true || index >= questionList.length) {
+                renderScore();
+                alert("end")
+                return;
+            }
+
                 // splice current selection from q/a arrays
                 rightAnswers.splice(index, 1);
                 questionList.splice(index, 1);
                 answerList.splice(index, 1);
 
                 // update index
-                index = Math.floor(Math.random() * questionList.length);
+                index = Math.floor(Math.random() * (questionList.length - 1));
 
                 // cycle to next questionBoxEl/answer
                 renderQuestion();
