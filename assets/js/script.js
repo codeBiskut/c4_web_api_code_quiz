@@ -153,8 +153,7 @@ function renderScore() {
     localStorage.setItem("winner-ini", userIni.value);
 
     // event listener for submit button
-    var submitButton = document.getElementById("formSubmitButton");
-    submitButton.addEventListener("submit", function () {
+    submit.addEventListener("click", function () {
         alert("made it")
         renderHighscore();
     });
