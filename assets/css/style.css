@@ -23,7 +23,7 @@ header {
 
 }
 
-#score-display{
+#answer-check{
     position: relative;
     left: 50%;
     transform: translateX(-50%);

@@ -2,9 +2,10 @@ var timerEl = document.getElementById("countdown-num")
 var startButtonEl = document.getElementById("start-button")
 var questionBoxEl = document.getElementById("question-box")
 var answerBoxEl = document.getElementById("answer-container")
-var scoreDisplayEl = document.getElementById("score-display")
+var answerCheckEl = document.getElementById("answer-check")
 var quizInterfaceEl = document.getElementById("quiz-interface")
 var landingMessageEl = document.getElementById("landing-message")
+var scorecardEl = document.getElementById("scorecard")
 var highscoreEl = document.getElementById("highscores")
 
 // array of questions to be displayed
@@ -91,7 +92,7 @@ function calculateScore() {
 
 function renderHighscore() {
     // clears quiz ui
-    scoreDisplayEl.classList.add("hide");
+    answerCheckEl.classList.add("hide");
     alert("made it")
 
     // create elements needed to display highscores
@@ -131,13 +132,13 @@ function renderScore() {
     // removes questionBoxEl box, answer container, and grade display from quiz ui
     answerBoxEl.classList.add("hide");
     questionBoxEl.classList.add("hide");
+    answerCheckEl.classList.add("hide");
+    scorecardEl.classList.remove("hide");
 
     // calculate the score
     calculateScore();
 
     // create elements needed to display scorecard
-    var scorecardContainer = document.createElement("div");
-    var scorecard = document.createElement("div");
     var scoretext = document.createElement("div");
     var addIniForm = document.createElement("form");
     var addIniLabel = document.createElement("label");
@@ -145,10 +146,7 @@ function renderScore() {
     var submit = document.createElement("input")
 
     // assign attributes to created elements
-    scorecardContainer.classList.add("scorecard-container");
-    scorecard.classList.add("scorecard");
-    scorecard.innerHTML = score;
-    scoretext.innerHTML = "Your score is:";
+    scoretext.innerHTML = "Your score is: " + score;
     addIniForm.classList.add("input-form");
     addIniForm.setAttribute("id", "initials");
     addIniLabel.innerHTML = "Enter your initials:";
@@ -158,15 +156,11 @@ function renderScore() {
     submit.setAttribute("id", "formSubmitButton");
 
     // append elements
-    quizInterfaceEl.appendChild(scorecardContainer);
-    //var scoreContainer = document.querySelector(".scorecard-container")
-    //scorecardContainer.appendChild(scoreContainer);
-    scorecardContainer.appendChild(scoretext);
-    scorecardContainer.appendChild(scorecard);
-    scorecardContainer.appendChild(addIniForm);
-    scorecardContainer.appendChild(addIniLabel);
-    scorecardContainer.appendChild(addIniInput);
-    scorecardContainer.appendChild(submit);
+    scorecardEl.appendChild(scoretext);
+    scorecardEl.appendChild(addIniForm);
+    scorecardEl.appendChild(addIniLabel);
+    scorecardEl.appendChild(addIniInput);
+    scorecardEl.appendChild(submit);
 
     var userIni = document.getElementById("initials");
     userInputEl = userIni;
@@ -211,12 +205,15 @@ function startTimer() {
         }
     }, 1000)
 
+    // show right/wrong
+    answerCheckEl.classList.remove("hide");
+
     // render first questionBoxEl
-    questionBoxEl.setAttribute("class", "");
+    questionBoxEl.classList.remove("hide");
     renderQuestion();
 
     // clear opening message in answer container, then load answers
-    answerBoxEl.setAttribute("class", "");
+    answerBoxEl.classList.remove("hide");
     answerBoxEl.innerHTML = "";
     renderAnswers();
 
@@ -236,7 +233,7 @@ function startTimer() {
             if ((userAnswerParsedgt.includes(rightAnswers[index])) && userAnswerParsedgt.length === rightAnswers[index].length) {
                 // if right, increment questionsRight and display correct
                 questionsRight++;
-                scoreDisplayEl.innerHTML = "Correct!";
+                answerCheckEl.innerHTML = "Correct!";
 
                 // if it is a dub, render the scoreboard
                 isWin = checkWin();
@@ -263,7 +260,7 @@ function startTimer() {
                 // and display wrong
                 questionsWrong++;
                 timeLeft = timeLeft - 2
-                scoreDisplayEl.innerHTML = "Wrong";
+                answerCheckEl.innerHTML = "Wrong";
 
                 // if it is a dub, render the scoreboard
             isWin = checkWin();
