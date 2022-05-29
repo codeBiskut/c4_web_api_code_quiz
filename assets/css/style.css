@@ -8,7 +8,7 @@ header {
     justify-content: space-between;
 }
 
-#question-box, #answer-container, #scorecard-container, #landing-message {
+#question-box, #answer-container, #scorecard-container, #landing-message, #scorecard {
     background-color: antiquewhite;
     border: 1px solid #eceff1;
     border-radius: 8px;

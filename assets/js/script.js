@@ -92,39 +92,25 @@ function calculateScore() {
 
 function renderHighscore() {
     // clears quiz ui
-    answerCheckEl.classList.add("hide");
+    scorecardEl.classList.add("hide");
+    highscoreEl.classList.remove("hide");
     alert("made it")
 
     // create elements needed to display highscores
-    var highscoreContainer = document.createElement("div");
     var highscoreText = document.createElement("div");
-    var highscoreTable = document.createElement("table");
-    var headerRow = document.createElement("tr");
-    var userRow = document.createElement("tr");
-    var thIni = document.createElement("th");
-    var thScore = document.createElement("th");
-    var tdIni = document.createElement("td");
-    var tdScore = document.createElement("td");
+    var highscoreList = document.createElement("ul");
+    var highscoreListEl = document.createElement("li")
 
     // set attributes of created elements
-    highscoreContainer.classList.add("highscore-container");
     highscoreText.innerHTML = "Highscores:";
-    highscoreTable.classList.add("highscore-table");
-    thIni.innerHTML = "Initials";
-    thScore.innerHTML = "Score";
-    tdIni.innerHTML = userInputEl.value;
-    tdScore.innerHTML = score;
+    highscoreListEl.textContent = localStorage.setItem("winner-ini", userIni.value);
+    
 
     // append elements
-    quizInterfaceEl.appendChild(highscoreContainer);
-    highscoreContainer.appendChild(highscoreText);
-    highscoreContainer.appendChild(highscoreTable);
-    highscoreTable.appendChild(headerRow);
-    headerRow.appendChild(thIni);
-    headerRow.appendChild(thScore);
-    highscoreTable.appendChild(userRow);
-    userRow.appendChild(tdIni);
-    userRow.appendChild(tdScore);
+    highscoreEl.appendChild(highscoreText);
+    highscoreEl.appendChild(highscoreList);
+    highscoreList.appendChild(highscoreListEl);
+    
 }
 
 // calculates score and renders scorecard
