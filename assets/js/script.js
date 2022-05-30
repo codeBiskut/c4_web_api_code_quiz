@@ -25,8 +25,16 @@ var questionsRight = 0;
 var questionsWrong = 0;
 var questionsAnswered = 0;
 
+// used in user input of initials
 var userInputEl;
 var userIni;
+
+// highscore storage
+var noHighscores = 5;
+var HIGH_SCORES = "highScores";
+var highScoreString = localStorage.getItem(HIGH_SCORES);
+var highScores = JSON.parse(highScoreString) ?? [];
+var lowestScore = highScores[noHighscores - 1]?.score ?? 0;
 
 // variable for win
 var isWin;
@@ -91,6 +99,7 @@ function calculateScore() {
 
 }
 
+
 function renderHighscore() {
     // clears quiz ui
     scorecardEl.classList.add("hide");
@@ -154,11 +163,30 @@ function renderScore() {
         // get user's input and add to local storage
         userIni = document.querySelector(".input-box").value;
         alert(userIni)
-        localStorage.setItem("winner-ini", userIni);
+        var newScore = [userIni, timeLeft];
+        
+        // check for new high score
+        highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
 
-        // render highscores
+    if (timeLeft > lowestScore) {
+        // add to list
+        highScores.push(newScore);
+
+        // sort
+        highScores.sort((a, b) => b.timeLeft - a.timeLeft);
+
+        // select new list
+        highScores.splice(noHighscores);
+
+        // save to local storage
+        localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
+
         renderHighscore();
-    });
+    }
+    else {
+        renderHighscore();
+    }
+});
 }
 
 // check if the win conditions are met
