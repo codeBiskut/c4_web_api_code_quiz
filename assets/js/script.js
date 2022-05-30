@@ -26,6 +26,7 @@ var questionsWrong = 0;
 var questionsAnswered = 0;
 
 var userInputEl;
+var userIni;
 
 // variable for win
 var isWin;
@@ -94,7 +95,6 @@ function renderHighscore() {
     // clears quiz ui
     scorecardEl.classList.add("hide");
     highscoreEl.classList.remove("hide");
-    alert("made it")
 
     // create elements needed to display highscores
     var highscoreText = document.createElement("div");
@@ -103,14 +103,14 @@ function renderHighscore() {
 
     // set attributes of created elements
     highscoreText.innerHTML = "Highscores:";
-    highscoreListEl.textContent = localStorage.setItem("winner-ini", userIni.value);
-    
+    highscoreListEl.textContent = localStorage.getItem("winner-ini", userIni.value);
+
 
     // append elements
     highscoreEl.appendChild(highscoreText);
     highscoreEl.appendChild(highscoreList);
     highscoreList.appendChild(highscoreListEl);
-    
+
 }
 
 // calculates score and renders scorecard
@@ -148,13 +148,15 @@ function renderScore() {
     scorecardEl.appendChild(addIniInput);
     scorecardEl.appendChild(submit);
 
-    var userIni = document.getElementById("initials");
-    userInputEl = userIni;
-    localStorage.setItem("winner-ini", userIni.value);
-
     // event listener for submit button
     submit.addEventListener("click", function () {
-        alert("made it")
+
+        // get user's input and add to local storage
+        userIni = document.querySelector(".input-box").value;
+        alert(userIni)
+        localStorage.setItem("winner-ini", userIni);
+
+        // render highscores
         renderHighscore();
     });
 }
@@ -248,12 +250,12 @@ function startTimer() {
                 answerCheckEl.innerHTML = "Wrong";
 
                 // if it is a dub, render the scoreboard
-            isWin = checkWin();
-            if (checkWin() === true || index >= questionList.length) {
-                renderScore();
-                alert("end")
-                return;
-            }
+                isWin = checkWin();
+                if (checkWin() === true || index >= questionList.length) {
+                    renderScore();
+                    alert("end")
+                    return;
+                }
 
                 // splice current selection from q/a arrays
                 rightAnswers.splice(index, 1);
