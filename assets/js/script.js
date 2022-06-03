@@ -100,6 +100,21 @@ function calculateScore() {
 
 }
 
+function saveHighScore(newScore) {
+    // add the highscore to the score array
+    highScores.push(newScore);
+
+    // sort the array from highest score to lowest
+    highScores.sort(function (a, b) {
+        return b[0] - a[0];
+    });
+
+    // remove the extra score (only five highscores)
+    highScores.splice(noHighscores);
+
+    // save to local storage
+    localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
+}
 
 function renderHighscore() {
     // clears quiz ui
@@ -164,31 +179,18 @@ function renderScore() {
         // get user's input and add to local storage
         userIni = document.querySelector(".input-box").value;
         var newScore = [timeLeft, userIni];
-        
+
         // check for new high score
         highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
 
-    if (timeLeft > lowestScore) {
-        // add the highscore to the score array
-        highScores.push(newScore);
-
-        // sort the array from highest score to lowest
-        highScores.sort(function(a, b) {
-            return b[0] - a[0];
-        });
-
-        // remove the extra score (only five highscores)
-        highScores.splice(noHighscores);
-
-        // save to local storage
-        localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
-
-        renderHighscore();
-    }
-    else {
-        renderHighscore();
-    }
-});
+        if (timeLeft > lowestScore) {
+            saveHighScore(newScore);
+            renderHighscore();
+        }
+        else {
+            renderHighscore();
+        }
+    });
 }
 
 // check if the win conditions are met
