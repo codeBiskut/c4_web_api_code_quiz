@@ -17,7 +17,7 @@ var answerList = [["<script>", "<button>", "<span>", "<h1>"], ["alert('Hello Wor
 
 
 // array of correct answers
-var rightAnswers = ["<script>", "alert('Hello World')", "function myFunction()", "myFunciton()", "if (i != 5)"];
+var rightAnswers = ["<script>", "alert('Hello World')", "function myFunction()", "myFunction()", "if (i != 5)"];
 
 // used in calculation of score
 var score;
