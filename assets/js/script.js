@@ -7,6 +7,8 @@ var quizInterfaceEl = document.getElementById("quiz-interface")
 var landingMessageEl = document.getElementById("landing-message")
 var scorecardEl = document.getElementById("scorecard")
 var highscoreEl = document.getElementById("highscores")
+var highscoreListEl = document.getElementById("highScoreList")
+
 
 // array of questions to be displayed
 var questionList = ["Inside which HTML element do we put the Javascript?", "How do you write 'Hello World' in an alert box?", "How do you declare a function named 'myFunction' in Javascript?", "How do you call a function named 'myFunction'?", "How to write an IF statement for executing some code if 'i' is NOT equal to 5?"];
@@ -35,7 +37,6 @@ var HIGH_SCORES = "highScores";
 var highScoreString = localStorage.getItem(HIGH_SCORES);
 var highScores = JSON.parse(highScoreString) ?? [];
 var lowestScore = highScores[noHighscores - 1]?.score ?? 0;
-var newHighScores;
 
 // variable for win
 var isWin;
@@ -116,25 +117,40 @@ function saveHighScore(newScore) {
     localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
 }
 
+function showHighScore(){
+    scorecardEl.classList.add("hide");
+    highscoreEl.classList.remove("hide");
+
+    alert(highScores.length)
+    highScores = JSON.parse(localStorage.getItem(highScores)) ?? [];
+
+    for(var i = 0; i < highScores.length; i++){
+        var highscoreLi = document.createElement("li");
+alert("made it")
+        highscoreLi.textContent = `${highScores[i[0]]} - ${highscores[i[1]]}`;
+
+        highscoreListEl.appendChild(highscoreLi);
+    }
+}
+
 function renderHighscore() {
     // clears quiz ui
     scorecardEl.classList.add("hide");
     highscoreEl.classList.remove("hide");
 
     // create elements needed to display highscores
-    var highscoreText = document.createElement("div");
-    var highscoreList = document.createElement("ul");
-    var highscoreListEl = document.createElement("li")
+    // var highscoreText = document.createElement("div");
+    // var highscoreList = document.createElement("ul");
+    // var highscoreListEl = document.createElement("li")
 
     // set attributes of created elements
-    highscoreText.innerHTML = "Highscores:";
-    highscoreListEl.textContent = localStorage.getItem("winner-ini", userIni.value);
+    // highscoreListEl.textContent = localStorage.getItem("winner-ini", userIni.value);
 
 
     // append elements
-    highscoreEl.appendChild(highscoreText);
-    highscoreEl.appendChild(highscoreList);
-    highscoreList.appendChild(highscoreListEl);
+    // highscoreEl.appendChild(highscoreText);
+    // highscoreEl.appendChild(highscoreList);
+    // highscoreList.appendChild(highscoreListEl);
 
 }
 
@@ -185,10 +201,12 @@ function renderScore() {
 
         if (timeLeft > lowestScore) {
             saveHighScore(newScore);
-            renderHighscore();
+            showHighScore();
+            //renderHighscore();
         }
         else {
-            renderHighscore();
+            showHighScore();
+            //renderHighscore();
         }
     });
 }
