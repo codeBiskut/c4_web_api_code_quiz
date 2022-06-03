@@ -35,6 +35,7 @@ var HIGH_SCORES = "highScores";
 var highScoreString = localStorage.getItem(HIGH_SCORES);
 var highScores = JSON.parse(highScoreString) ?? [];
 var lowestScore = highScores[noHighscores - 1]?.score ?? 0;
+var newHighScores;
 
 // variable for win
 var isWin;
@@ -162,20 +163,21 @@ function renderScore() {
 
         // get user's input and add to local storage
         userIni = document.querySelector(".input-box").value;
-        alert(userIni)
-        var newScore = [userIni, timeLeft];
+        var newScore = [timeLeft, userIni];
         
         // check for new high score
         highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
 
     if (timeLeft > lowestScore) {
-        // add to list
+        // add the highscore to the score array
         highScores.push(newScore);
 
-        // sort
-        highScores.sort((a, b) => b.timeLeft - a.timeLeft);
+        // sort the array from highest score to lowest
+        highScores.sort(function(a, b) {
+            return b[0] - a[0];
+        });
 
-        // select new list
+        // remove the extra score (only five highscores)
         highScores.splice(noHighscores);
 
         // save to local storage
