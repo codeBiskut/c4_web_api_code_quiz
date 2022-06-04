@@ -272,6 +272,9 @@ function startTimer() {
                 questionsRight++;
                 answerCheckEl.innerHTML = "Correct!";
 
+                // refresh timer on screen
+                timerEl.textContent = timeLeft;
+                
                 // if it is a dub, render the scoreboard
                 isWin = checkWin();
                 if (checkWin() === true || index >= questionList.length) {
