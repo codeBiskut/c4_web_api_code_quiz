@@ -293,10 +293,10 @@ function startTimer() {
                 renderAnswers();
             }
             else {
-                // if wrong, increment questionsWrong and subtract 2s from timer
+                // if wrong, increment questionsWrong and subtract 5s from timer
                 // and display wrong
                 questionsWrong++;
-                timeLeft = timeLeft - 2
+                timeLeft = timeLeft - 5
                 answerCheckEl.innerHTML = "Wrong";
 
                 // if it is a dub, render the scoreboard

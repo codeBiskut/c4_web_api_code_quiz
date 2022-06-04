@@ -37,3 +37,12 @@ header {
 .hide {
     display:none;
 }
+
+.answer-button{
+    flex-direction: row;
+    display:inline-block;
+    flex-wrap: wrap;    
+    position: relative;
+    width: 50%;
+    height: 20%;
+}
