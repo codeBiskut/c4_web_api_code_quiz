@@ -37,6 +37,8 @@ var HIGH_SCORES = "highScores";
 var highScoreString = localStorage.getItem(HIGH_SCORES);
 var highScores = JSON.parse(highScoreString) ?? [];
 var lowestScore = highScores[noHighscores - 1]?.score ?? 0;
+var elementsRemoved = 0;
+var totalLength;
 
 // variable for win
 var isWin;
@@ -122,12 +124,18 @@ function showHighScore() {
     highscoreEl.classList.remove("hide");
 
     highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
-    for(var i=0;i<highScores.length;i++) {
+    for (var i = 0; i < noHighscores; i++) {
         var highscoreLi = document.createElement("li");
-        alert("made it")
-        highscoreLi.textContent = `${highScores[i[0]]} - ${highScores[i[1]]}`;
+        var retreivedElement = highScores.shift();
+        totalLength = highScores.length + elementsRemoved;
+        console.log(totalLength)
+
+
+        highscoreLi.textContent = retreivedElement[0] + " - " + retreivedElement[1]
 
         highscoreListEl.appendChild(highscoreLi);
+
+        elementsRemoved++;
     }
 }
 
