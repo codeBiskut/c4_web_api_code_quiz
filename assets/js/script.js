@@ -117,17 +117,15 @@ function saveHighScore(newScore) {
     localStorage.setItem(HIGH_SCORES, JSON.stringify(highScores));
 }
 
-function showHighScore(){
+function showHighScore() {
     scorecardEl.classList.add("hide");
     highscoreEl.classList.remove("hide");
 
-    alert(highScores.length)
-    highScores = JSON.parse(localStorage.getItem(highScores)) ?? [];
-
-    for(var i = 0; i < highScores.length; i++){
+    highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
+    for(var i=0;i<highScores.length;i++) {
         var highscoreLi = document.createElement("li");
-alert("made it")
-        highscoreLi.textContent = `${highScores[i[0]]} - ${highscores[i[1]]}`;
+        alert("made it")
+        highscoreLi.textContent = `${highScores[i[0]]} - ${highScores[i[1]]}`;
 
         highscoreListEl.appendChild(highscoreLi);
     }
@@ -274,7 +272,7 @@ function startTimer() {
 
                 // refresh timer on screen
                 timerEl.textContent = timeLeft;
-                
+
                 // if it is a dub, render the scoreboard
                 isWin = checkWin();
                 if (checkWin() === true || index >= questionList.length) {
