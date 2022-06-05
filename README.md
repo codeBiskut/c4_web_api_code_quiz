@@ -21,3 +21,18 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
+
+## APPLICATION SCREENSHOT:
+
+[Link to application screenshot](https://user-images.githubusercontent.com/31594803/172062089-74b6b85f-d80b-4a9f-b1fc-4dbb042cf84a.png)
+
+
+
+## DEPLOYED LINK:
+
+[Link to deployed site](https://codebiskut.github.io/c4_web_api_code_quiz/)
+
+## CREDITS:
+```
+Joshua Rinehart - codeBiskut
+```
