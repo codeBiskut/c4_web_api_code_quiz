@@ -153,10 +153,10 @@ function showScore() {
 
     // assign attributes to created elements
     scoretext.innerHTML = "Your score is: " + score;
-    addIniForm.classList.add("input-form");
+    addIniForm.setAttribute("id", "input-form");
     addIniForm.setAttribute("id", "initials");
     addIniLabel.innerHTML = "Enter your initials:";
-    addIniInput.classList.add("input-box");
+    addIniInput.setAttribute("id", "input-box");
     addIniInput.setAttribute("type", "text");
     submit.setAttribute("type", "submit");
     submit.setAttribute("id", "formSubmitButton");
@@ -172,7 +172,7 @@ function showScore() {
     submit.addEventListener("click", function () {
 
         // get user's input and add to local storage
-        userIni = document.querySelector(".input-box").value;
+        userIni = document.getElementById("input-box").value;
         var newScore = [timeLeft, userIni];
 
         // check for new high score
