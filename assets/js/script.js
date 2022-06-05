@@ -37,8 +37,6 @@ var HIGH_SCORES = "highScores";
 var highScoreString = localStorage.getItem(HIGH_SCORES);
 var highScores = JSON.parse(highScoreString) ?? [];
 var lowestScore = highScores[noHighscores - 1]?.score ?? 0;
-var elementsRemoved = 0;
-var totalLength;
 
 // variable for win
 var isWin;
@@ -77,7 +75,7 @@ function renderAnswers() {
     // if it is a dub, render the scoreboard
     isWin = checkWin();
     if (checkWin() === true || index >= questionList.length) {
-        renderScore();
+        showScore();
         return;
     }
 
@@ -94,13 +92,6 @@ function renderAnswers() {
 // renders questions to the page
 function renderQuestion() {
     questionBoxEl.innerHTML = questionList[index];
-}
-
-// calculates score
-function calculateScore() {
-    // calculate score; 5 points for every correct answer
-    score = timeLeft;
-
 }
 
 function saveHighScore(newScore) {
@@ -120,48 +111,30 @@ function saveHighScore(newScore) {
 }
 
 function showHighScore() {
+    // hide scorecard and show the high score list
     scorecardEl.classList.add("hide");
     highscoreEl.classList.remove("hide");
 
+    // grab high scores from local storage
     highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
+
+    // for every high score
     for (var i = 0; i < noHighscores; i++) {
+        // create a list element, take the first high score from the string
         var highscoreLi = document.createElement("li");
         var retreivedElement = highScores.shift();
-        totalLength = highScores.length + elementsRemoved;
-        console.log(totalLength)
 
-
+        // display score and name from retreived element
         highscoreLi.textContent = retreivedElement[0] + " - " + retreivedElement[1]
 
+        // append the list element
         highscoreListEl.appendChild(highscoreLi);
 
-        elementsRemoved++;
     }
 }
 
-function renderHighscore() {
-    // clears quiz ui
-    scorecardEl.classList.add("hide");
-    highscoreEl.classList.remove("hide");
-
-    // create elements needed to display highscores
-    // var highscoreText = document.createElement("div");
-    // var highscoreList = document.createElement("ul");
-    // var highscoreListEl = document.createElement("li")
-
-    // set attributes of created elements
-    // highscoreListEl.textContent = localStorage.getItem("winner-ini", userIni.value);
-
-
-    // append elements
-    // highscoreEl.appendChild(highscoreText);
-    // highscoreEl.appendChild(highscoreList);
-    // highscoreList.appendChild(highscoreListEl);
-
-}
-
 // calculates score and renders scorecard
-function renderScore() {
+function showScore() {
     // removes questionBoxEl box, answer container, and grade display from quiz ui
     answerBoxEl.classList.add("hide");
     questionBoxEl.classList.add("hide");
@@ -169,7 +142,7 @@ function renderScore() {
     scorecardEl.classList.remove("hide");
 
     // calculate the score
-    calculateScore();
+    score = timeLeft;
 
     // create elements needed to display scorecard
     var scoretext = document.createElement("div");
@@ -205,14 +178,15 @@ function renderScore() {
         // check for new high score
         highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
 
+        // if user's score is greater than the lowest score
         if (timeLeft > lowestScore) {
+            // save the high score, then show all high scores
             saveHighScore(newScore);
             showHighScore();
-            //renderHighscore();
         }
         else {
+            // otherwise just display high scores
             showHighScore();
-            //renderHighscore();
         }
     });
 }
@@ -244,7 +218,7 @@ function startTimer() {
         isWin = checkWin();
         if (checkWin() === true) {
             clearInterval(timer);
-            renderScore();
+            showScore();
         }
     }, 1000)
 
@@ -284,7 +258,7 @@ function startTimer() {
                 // if it is a dub, render the scoreboard
                 isWin = checkWin();
                 if (checkWin() === true || index >= questionList.length) {
-                    renderScore();
+                    showScore();
                     alert("end")
                     return;
                 }
@@ -311,7 +285,7 @@ function startTimer() {
                 // if it is a dub, render the scoreboard
                 isWin = checkWin();
                 if (checkWin() === true || index >= questionList.length) {
-                    renderScore();
+                    showScore();
                     alert("end")
                     return;
                 }
@@ -338,4 +312,5 @@ function startTimer() {
 // listens for click on start button, runs startGame on click
 startButtonEl.addEventListener("click", startGame);
 
+// inital function ran on page load
 init();
